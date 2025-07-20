@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Add a New Destination</h2>
+
+<form method="POST" class="add-form">
+    <label for="name">Destination Name:</label><br />
+    <input type="text" name="name" id="name" required /><br /><br />
+
+    <label for="region">Region:</label><br />
+    <select name="region" id="region" required>
+        <option value="" disabled selected>Select a region</option>
+        {% for r in regions %}
+        <option value="{{ r }}" {% if selected_region == r %}selected{% endif %}>{{ r }}</option>
+        {% endfor %}
+        <option value="Other">Other</option>
+    </select><br /><br />
+
+    <label for="description">Description:</label><br />
+    <textarea name="description" id="description" rows="4" required></textarea><br /><br />
+
+    <label for="image">Image filename (in static/images/):</label><br />
+    <input type="text" name="image" id="image" placeholder="e.g. paris.jpg" required /><br /><br />
+
+    <button type="submit">Add Destination</button>
+</form>
+
+<hr>
+
+<h2>Destinations{% if selected_region %} in {{ selected_region }}{% endif %}</h2>
+
+<form method="GET" action="{{ url_for('home') }}" class="filter-form">
+    <label for="region-filter">Filter by Region:</label>
+    <select name="region" id="region-filter" onchange="this.form.submit()">
+        <option value="">All</option>
+        {% for r in regions %}
+        <option value="{{ r }}" {% if selected_region == r %}selected{% endif %}>{{ r }}</option>
+        {% endfor %}
+        <option value="Other" {% if selected_region == 'Other' %}selected{% endif %}>Other</option>
+    </select>
+</form>
+
+<div class="dest-list">
+    {% for dest in destinations %}
+    <a href="{{ url_for('destination', dest_id=dest.id) }}" class="dest-card">
+        <img src="{{ url_for('static', filename=dest.image) }}" alt="{{ dest.name }}" />
+        <h3>{{ dest.name }}</h3>
+        <p class="region">{{ dest.region }}</p>
+    </a>
+    {% else %}
+    <p>No destinations found.</p>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,170 @@
+body {
+    background-color: #f9f6f1;
+    color: #4b3b2b;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Navbar */
+nav {
+    background-color: #a67843; /* warm sand brown */
+    padding: 15px 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+}
+
+.nav-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.nav-brand {
+    color: #f4e6c1;
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.nav-brand:hover {
+    color: #d2c4a0;
+}
+
+/* Headings */
+h2 {
+    color: #a67843;
+    margin-bottom: 20px;
+}
+
+/* Form styling */
+form.add-form, form.filter-form {
+    background-color: #fff8e7;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 3px 12px rgba(166,134,67,0.15);
+    margin-bottom: 30px;
+}
+
+input[type="text"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 5px;
+    border: 1px solid #d9c5a5;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+textarea {
+    resize: vertical;
+}
+
+button {
+    background-color: #a67843;
+    color: #fff8e7;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #7b5630;
+}
+
+/* Filter dropdown */
+form.filter-form label {
+    font-weight: 600;
+    margin-right: 10px;
+}
+
+/* Destinations list */
+.dest-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 25px;
+    justify-content: start;
+}
+
+.dest-card {
+    width: 220px;
+    background: #fff8e7;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px rgba(166,134,67,0.1);
+    text-align: center;
+    text-decoration: none;
+    color: #4b3b2b;
+    padding-bottom: 15px;
+    transition: box-shadow 0.3s ease;
+}
+
+.dest-card:hover {
+    box-shadow: 0 6px 30px rgba(166,134,67,0.25);
+}
+
+.dest-card img {
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 140px;
+    object-fit: cover;
+}
+
+.dest-card h3 {
+    margin: 10px 0 4px;
+}
+
+.dest-card .region {
+    font-style: italic;
+    color: #a67843;
+}
+
+/* Destination detail page */
+.dest-detail {
+    display: flex;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.dest-detail img {
+    width: 280px;
+    height: 180px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.dest-detail div {
+    max-width: 550px;
+}
+
+.dest-detail .region {
+    font-style: italic;
+    font-weight: 600;
+    color: #a67843;
+    margin-bottom: 15px;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 30px;
+    text-decoration: none;
+    color: #a67843;
+    font-weight: 600;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 50px;
+    color: #8b7b5d;
+    font-size: 0.9rem;
+}
