@@ -2,60 +2,44 @@ from flask import Flask, render_template, request, redirect, url_for
 
 app = Flask(__name__)
 
-# Sample playlists with songs and album art
-playlists = [
-    {
-        'id': 1,
-        'name': 'Beach Vibes',
-        'genre': 'Chill',
-        'album_art': 'album1.jpg',
-        'songs': [
-            {'title': 'Sunset Melody', 'artist': 'Wave Riders'},
-            {'title': 'Ocean Breeze', 'artist': 'Sandy Tunes'},
-        ],
-    },
-    {
-        'id': 2,
-        'name': 'Workout Pump',
-        'genre': 'Fitness',
-        'album_art': 'album2.jpg',
-        'songs': [
-            {'title': 'Energy Boost', 'artist': 'Gym Beats'},
-        ],
-    },
+# Sample initial data
+destinations = [
+    {'id': 1, 'name': 'Paris', 'region': 'Europe', 'image': 'images/paris.jpg', 'description': 'The City of Light and love.'},
+    {'id': 2, 'name': 'Tokyo', 'region': 'Asia', 'image': 'images/tokyo.jpg', 'description': 'A vibrant city blending tradition and technology.'},
+    {'id': 3, 'name': 'New York City', 'region': 'North America', 'image': 'images/nyc.jpg', 'description': 'The city that never sleeps.'},
 ]
 
-def get_playlist(pid):
-    return next((p for p in playlists if p['id'] == pid), None)
-
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def home():
-    return redirect(url_for('list_playlists'))
-
-@app.route('/playlists/')
-def list_playlists():
-    genre = request.args.get('genre')
-    if genre:
-        filtered = [p for p in playlists if p['genre'].lower() == genre.lower()]
-    else:
-        filtered = playlists
-    genres = sorted({p['genre'] for p in playlists})
-    return render_template('playlists.html', playlists=filtered, genres=genres, selected_genre=genre)
-
-@app.route('/playlist/<int:playlist_id>/', methods=['GET', 'POST'])
-def playlist_detail(playlist_id):
-    playlist = get_playlist(playlist_id)
-    if not playlist:
-        return "Playlist not found", 404
-
     if request.method == 'POST':
-        title = request.form.get('title')
-        artist = request.form.get('artist')
-        if title and artist:
-            playlist['songs'].append({'title': title, 'artist': artist})
-            return redirect(url_for('playlist_detail', playlist_id=playlist_id))
+        name = request.form.get('name')
+        region = request.form.get('region')
+        description = request.form.get('description')
+        image = request.form.get('image')  # Image filename expected to be in static/images/
+        if name and region and description and image:
+            new_id = max(d['id'] for d in destinations) + 1 if destinations else 1
+            destinations.append({
+                'id': new_id,
+                'name': name,
+                'region': region,
+                'description': description,
+                'image': f'images/{image}'
+            })
+            return redirect(url_for('home'))
 
-    return render_template('playlist.html', playlist=playlist)
+    regions = sorted(set(d['region'] for d in destinations))
+    selected_region = request.args.get('region')
+    filtered = [d for d in destinations if d['region'] == selected_region] if selected_region else destinations
+    return render_template('home.html', destinations=filtered, regions=regions, selected_region=selected_region)
+
+@app.route('/destination/<int:dest_id>')
+def destination(dest_id):
+    dest = next((d for d in destinations if d['id'] == dest_id), None)
+    if not dest:
+        return "Destination not found", 404
+    return render_template('destination.html', destination=dest)
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)

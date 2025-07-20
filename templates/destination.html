@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="dest-detail">
+    <img src="{{ url_for('static', filename=destination.image) }}" alt="{{ destination.name }}" />
+    <div>
+        <h2>{{ destination.name }}</h2>
+        <p class="region">{{ destination.region }}</p>
+        <p>{{ destination.description }}</p>
+    </div>
+</div>
+
+<a href="{{ url_for('home') }}" class="back-link">⬅ Back to destinations</a>
+{% endblock %}
